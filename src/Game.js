@@ -81,17 +81,24 @@ class Game {
     this.collision.checkCollisions();
   }
 
-  play() {
+  renderFrame() {
+    this.regenerateTrack();
+    this.view.render(this.track);
+  }
+
+  startLoop() {
+    console.clear();
+    console.log('🎮 Game started!');
+
     const interval = setInterval(() => {
       if (!this.hero.isAlive) {
         clearInterval(interval);
-        console.log('Game Over');
+        console.log('💀 Game Over');
         return;
       }
 
       this.updateGameObjects();
-      this.regenerateTrack();
-      this.view.render(this.track);
+      this.renderFrame();
     }, 200);
   }
 }
