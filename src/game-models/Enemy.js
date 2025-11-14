@@ -18,6 +18,8 @@ class Enemy {
     this.generateSkin();
   }
 
+  
+
   moveLeft() {
     if (!this.isAlive) return
     this.position -= 1;

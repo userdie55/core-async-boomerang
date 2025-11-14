@@ -1,5 +1,7 @@
 // Управляет проверкой всех типов столкновений в игре.
 
+const Enemy = require("./Enemy");
+
 class CollisionManager {
   constructor({ hero, enemy, boomerang }) {
     this.hero = hero;
@@ -28,6 +30,7 @@ class CollisionManager {
     if (this.boomerang.position === this.enemy.position) {
       this.enemy.die();
       game.killedEnemies++;
+      game.spawnNewEnemy()
     }
   }
 

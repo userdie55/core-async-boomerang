@@ -72,8 +72,8 @@ class Game {
   }
 
   updateGameObjects() {
-    this.updateEnemy();
     this.boomerang.update();
+    this.updateEnemy();
     this.collision.checkCollisions(this);
   }
 
@@ -108,7 +108,7 @@ class Game {
       this.updateGameObjects();
       this.regenerateTrack();
       this.view.render(this.track);
-    }, 200);
+    }, 100);
   }
 }
 

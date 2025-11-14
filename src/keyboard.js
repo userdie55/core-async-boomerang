@@ -21,19 +21,16 @@ function createKeyboard(game) {
     q: () => process.exit(),
   };
 
-  // Какая-то функция.
   function runInteractiveConsole() {
     keypress(process.stdin);
     process.stdin.on('keypress', (ch, key) => {
       if (key) {
-        // Вызывает команду, соответствующую нажатой кнопке.
         if (key.name in keyboard) {
           keyboard[key.name]();
         }
         if (key.name === 'space') {
           keyboard.space();
         }
-        // Прерывание программы.
         if (key.ctrl && key.name === 'c') {
           process.exit();
         }
@@ -43,7 +40,6 @@ function createKeyboard(game) {
     process.stdin.resume();
   }
 
-  // Давай попробуем запустить этот скрипт!
   runInteractiveConsole();
 }
 
