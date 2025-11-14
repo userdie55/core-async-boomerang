@@ -1,6 +1,5 @@
-
-const inquirer = require('inquirer').default
-const Player = require('./Player');
+const inquirer = require('inquirer').default;
+const db = require('../db/models');
 
 class PlayerRegistration {
   async createPlayer() {
@@ -9,24 +8,20 @@ class PlayerRegistration {
         type: 'input',
         name: 'name',
         message: 'Введите ваше имя:',
-        validate: (value) => this.validateName(value),
+        validate: (value) => {
+          if (!value || value.trim().length < 1) return 'Введите имя!';
+          return true;
+        },
       },
     ]);
 
-    return new Player(name.trim());
-  }
+    const player = await db.Player.create({
+      name: name.trim(),
+    });
 
-  validateName(name) {
-    if (!name || name.trim().length < 3) {
-      return 'Имя должно быть длиной не менее 3 символов';
-    }
-    return true;
-  }
-
-  startSession(player, game) {
-    game.player = player;
-    game.startLoop();
+    return player; 
   }
 }
 
 module.exports = PlayerRegistration;
+

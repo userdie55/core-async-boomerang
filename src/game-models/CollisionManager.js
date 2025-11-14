@@ -7,9 +7,9 @@ class CollisionManager {
     this.boomerang = boomerang;
   }
 
-  checkCollisions() {
+  checkCollisions(game) {
     this.checkHeroEnemyCollision();
-    this.checkBoomerangEnemyCollision();
+    this.checkBoomerangEnemyCollision(game);
     this.checkEnemyReachedHero();
   }
 
@@ -21,12 +21,13 @@ class CollisionManager {
     }
   }
 
-  checkBoomerangEnemyCollision() {
+  checkBoomerangEnemyCollision(game) {
     if (!this.boomerang.isActive || !this.enemy.isAlive) return;
     if (this.boomerang.position == null) return;
 
     if (this.boomerang.position === this.enemy.position) {
       this.enemy.die();
+      game.killedEnemies++;
     }
   }
 
