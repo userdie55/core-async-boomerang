@@ -1,9 +1,10 @@
 // Враг.
 
 class Enemy {
-  constructor() {
+  constructor({ position }) {
     this.generateSkin();
-    this.position = 2;
+    this.position = position;
+    this.isAlive = true
   }
 
   generateSkin() {
@@ -12,12 +13,13 @@ class Enemy {
   }
 
   moveLeft() {
-    // Идём влево.
+    if (!this.isAlive) return
     this.position -= 1;
   }
 
   die() {
-    this.position = '?';
+    this.isAlive = false
+    this.position = null;
     console.log('Enemy is dead!');
   }
 }
