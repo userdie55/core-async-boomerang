@@ -1,12 +1,18 @@
 // Основной файл.
 // Запускает игру.
 const Game = require('./src/Game');
+const PlayerService = require('./src/PlayerRegistration');
 
-// Инициализация игры с настройками.
-const game = new Game({
-  trackLength: 40,
-});
+async function main() {
+  const game = new Game({
+    trackLength: 40,
+  });
 
+  const playerService = new PlayerService();
 
-// Запуск игры.
-game.play();
+  const player = await playerService.createPlayer();
+
+  playerService.startSession(player, game);
+}
+
+main();
