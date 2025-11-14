@@ -28,7 +28,7 @@ class Game {
       boomerang: this.boomerang,
     });
 
-    this.view = new View();
+    this.view = new View(this);
     this.track = [];
 
     this.regenerateTrack();

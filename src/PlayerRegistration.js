@@ -25,7 +25,7 @@ class PlayerRegistration {
 
   startSession(player, game) {
     game.player = player;
-    game.play();
+    game.startLoop();
   }
 }
 
