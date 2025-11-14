@@ -31,7 +31,6 @@ class Hero {
   }
 
   attack() {
-    // Атакуем.
     if (!this.isAlive) return;
     this.boomerang.fly();
   }

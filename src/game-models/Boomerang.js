@@ -6,7 +6,7 @@ class Boomerang {
   constructor() {
     this.skin = '🌀';
     this.position = null;
-    this.state = 'idle'; // idle | flying | returning
+    this.state = 'idle'; 
     this.direction = 1
     this.isActive = false;
     this.hero = null;
@@ -30,7 +30,7 @@ class Boomerang {
 
     this.position += this.direction;
 
-    if (this.state === 'flying' && this.position >= 19) {
+    if (this.state === 'flying' && this.position >= 35) {
       this.state = 'returning';
       this.direction = -1;
     }
