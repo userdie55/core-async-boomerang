@@ -13,8 +13,8 @@ const View = require('./View');
 class Game {
   constructor({ trackLength }) {
     this.trackLength = trackLength;
-    this.hero = new Hero(); // Герою можно аргументом передать бумеранг.
-    this.enemy = new Enemy();
+    this.hero = new Hero({position:1}); // Герою можно аргументом передать бумеранг.
+    this.enemy = new Enemy({position:36});
     this.view = new View(this);
     this.track = [];
     this.regenerateTrack();
