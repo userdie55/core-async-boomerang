@@ -12,7 +12,7 @@ const CollisionManager = require('./game-models/CollisionManager');
 // Тут будут все настройки, проверки, запуск.
 
 class Game {
-  constructor({ trackLength }) {
+  constructor({ trackLength, db }) {
     this.trackLength = trackLength;
 
     this.hero = new Hero({ position: 1 });
@@ -28,9 +28,11 @@ class Game {
       boomerang: this.boomerang,
     });
 
-    this.view = new View();
+    this.view = new View(this);
     this.track = [];
-
+    this.db = db;
+    this.killedEnemies = 0;
+    this.startTime = Date.now();
     this.regenerateTrack();
   }
 
@@ -78,22 +80,42 @@ class Game {
   updateGameObjects() {
     this.updateEnemy();
     this.boomerang.update();
-    this.collision.checkCollisions();
+    this.collision.checkCollisions(this);
   }
 
   play() {
-    const interval = setInterval(() => {
-      if (!this.hero.isAlive) {
-        clearInterval(interval);
-        console.log('Game Over');
-        return;
+  const interval = setInterval(async () => {
+    if (!this.hero.isAlive) {
+      clearInterval(interval);
+
+      const endTime = Date.now();
+      const duration = Math.floor((endTime - this.startTime) / 1000);
+
+      try {
+        await this.db.Result.create({
+          player_id: this.player.id,
+          score: this.killedEnemies,
+          time: duration,
+        });
+
+        console.log('\n\n===== РЕЗУЛЬТАТ СОХРАНЁН =====');
+        console.log(`Player ID: ${this.player.id}`);
+        console.log(`Killed enemies: ${this.killedEnemies}`);
+        console.log(`Time: ${duration}s`);
+      } catch (err) {
+        console.error('Ошибка при сохранении:', err);
       }
 
-      this.updateGameObjects();
-      this.regenerateTrack();
-      this.view.render(this.track);
-    }, 200);
-  }
+      console.log('Game Over');
+      return;
+    }
+
+    this.updateGameObjects();
+    this.regenerateTrack();
+    this.view.render(this.track);
+  }, 200);
+}
+
 }
 
 module.exports = Game;

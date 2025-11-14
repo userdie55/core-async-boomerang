@@ -1,18 +1,23 @@
 // Основной файл.
 // Запускает игру.
 const Game = require('./src/Game');
-const PlayerService = require('./src/PlayerRegistration');
+const PlayerRegistration = require('./src/PlayerRegistration');
+const db = require('./db/models');
 
 async function main() {
+  await db.sequelize.authenticate();
+  console.log('DB connected');
+
+  const reg = new PlayerRegistration();
+  const player = await reg.createPlayer();
+
   const game = new Game({
     trackLength: 40,
+    db,
   });
 
-  const playerService = new PlayerService();
-
-  const player = await playerService.createPlayer();
-
-  playerService.startSession(player, game);
+  game.player = player;
+  game.play();
 }
 
 main();
