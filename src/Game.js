@@ -7,6 +7,7 @@ const Enemy = require('./game-models/Enemy');
 const Boomerang = require('./game-models/Boomerang');
 const View = require('./View');
 const CollisionManager = require('./game-models/CollisionManager');
+const createKeyboard = require('./keyboard');
 
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
@@ -34,6 +35,7 @@ class Game {
     this.killedEnemies = 0;
     this.startTime = Date.now();
     this.regenerateTrack();
+    
   }
 
   regenerateTrack() {
@@ -116,6 +118,27 @@ class Game {
   }, 200);
 }
 
+  renderFrame() {
+    this.regenerateTrack();
+    this.view.render(this.track);
+  }
+
+  startLoop() {
+    console.clear();
+    console.log('🎮 Game started!');
+    createKeyboard(this);
+
+    const interval = setInterval(() => {
+      if (!this.hero.isAlive) {
+        clearInterval(interval);
+        console.log('💀 Game Over');
+        return;
+      }
+
+      this.updateGameObjects();
+      this.renderFrame();
+    }, 200);
+  }
 }
 
 module.exports = Game;
