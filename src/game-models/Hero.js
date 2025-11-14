@@ -4,32 +4,42 @@ class Hero {
   constructor({ position } = {}) {
     this.skin = '🤠'; // можете использовать любые emoji '💃'
     this.position = position;
-    this.isAlive = true
-    this.gameOver = false
+    this.isAlive = true;
+    this.gameOver = false;
   }
 
   moveLeft() {
     // Идём влево.
-    if (!this.isAlive) return
+    if (!this.isAlive) return;
     this.position -= 1;
   }
 
   moveRight() {
     // Идём вправо.
-    if (!this.isAlive) return
+    if (!this.isAlive) return;
     this.position += 1;
+  }
+
+  moveUp() {
+    if (!this.isAlive) return;
+    console.log('Hero moves up');
+  }
+
+  moveDown() {
+    if (!this.isAlive) return;
+    console.log('Hero moves down');
   }
 
   attack() {
     // Атакуем.
-    if (!this.isAlive) return
+    if (!this.isAlive) return;
     this.boomerang.fly();
   }
 
   die() {
-    this.isAlive = false
+    this.isAlive = false;
     this.skin = '💀';
-    this.gameOver = true
+    this.gameOver = true;
     console.log('YOU ARE DEAD!💀');
   }
 }

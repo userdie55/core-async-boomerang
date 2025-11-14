@@ -13,6 +13,7 @@ async function main() {
   const player = await playerService.createPlayer();
 
   playerService.startSession(player, game);
+  
 }
 
 main();
